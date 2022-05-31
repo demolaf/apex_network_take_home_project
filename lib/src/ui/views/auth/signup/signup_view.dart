@@ -1,3 +1,5 @@
+import 'package:apex_network_take_home_project/src/ui/core/extensions/validation_extension.dart';
+import 'package:apex_network_take_home_project/src/ui/core/extensions/view_state.dart';
 import 'package:apex_network_take_home_project/src/ui/views/auth/signup/signup_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,7 +15,9 @@ import '../../../shared/stateless/visibility_toggle.dart';
 import '../base_auth/base_auth_view.dart';
 
 class SignupView extends HookConsumerWidget {
-  const SignupView({Key? key}) : super(key: key);
+  SignupView({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,7 +35,6 @@ class SignupView extends HookConsumerWidget {
       extendBodyBehindAppBar: true,
       body: BaseAuthenticationView(
         canGoBack: true,
-        hasForgotPassword: false,
         headerText: RichText(
           text: TextSpan(
             text: 'Create a',
@@ -67,6 +70,7 @@ class SignupView extends HookConsumerWidget {
         footerTextLeading: 'Already have an account?',
         footerTextTrailing: 'Sign In',
         form: Form(
+          key: _formKey,
           child: Column(
             children: [
               CustomTextField(
@@ -74,6 +78,7 @@ class SignupView extends HookConsumerWidget {
                 controller: fullNameController,
                 textFieldColor: AppColors.kGrey50,
                 keyBoardType: TextInputType.name,
+                validator: context.validateFullName,
                 textStyle: AppTextStyles.kBodySemiBold.copyWith(
                   fontSize: FontSize.s16.sp,
                 ),
@@ -84,6 +89,7 @@ class SignupView extends HookConsumerWidget {
                 controller: emailTextController,
                 textFieldColor: AppColors.kGrey50,
                 keyBoardType: TextInputType.emailAddress,
+                validator: context.validateEmail,
                 textStyle: AppTextStyles.kBodySemiBold.copyWith(
                   fontSize: FontSize.s16.sp,
                 ),
@@ -93,8 +99,8 @@ class SignupView extends HookConsumerWidget {
                 hintText: 'Password',
                 controller: passwordTextController,
                 textFieldColor: AppColors.kGrey50,
-                keyBoardType: TextInputType.visiblePassword,
                 obscureText: !viewState.passwordVisible,
+                validator: context.validatePassword,
                 suffixIcon: CustomVisibilityButton(
                   obscureText: viewState.passwordVisible,
                   onTap: () {
@@ -105,6 +111,15 @@ class SignupView extends HookConsumerWidget {
             ],
           ),
         ),
+        onMainActionButtonTapped: () async {
+          if (!_formKey.currentState!.validate()) {
+            return;
+          }
+          await ref
+              .read(signupViewModel.notifier)
+              .getEmailToken(email: emailTextController.text);
+        },
+        isLoading: viewState.viewState.isLoading,
       ),
     );
   }
