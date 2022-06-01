@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColors {
   AppColors._();
 
@@ -10,6 +12,9 @@ class AppColors {
   static const kSecondary = Color(0xFF111827);
 
   // More colors
+  static Color kGreen = Colors.green.shade600;
+  static Color kRed = Colors.red.shade600;
+
   static const kGrey500 = Color(0xFF6B7280);
   static const kGrey400 = Color(0xFF9CA3AF);
   static const kGrey300 = Color(0xFFC4C4C4);
