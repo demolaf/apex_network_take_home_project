@@ -72,6 +72,7 @@ class SignupView extends HookConsumerWidget {
         form: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTextField(
                 hintText: 'Full name',
@@ -117,7 +118,18 @@ class SignupView extends HookConsumerWidget {
           }
           await ref
               .read(signupViewModel.notifier)
-              .getEmailToken(email: emailTextController.text);
+              .getEmailToken(email: emailTextController.text)
+              .then((value) => ref
+                  .read(signupViewModel.notifier)
+                  .goToVerifyEmailView()
+                  .then((value) async =>
+                      await ref.read(signupViewModel.notifier).signup(
+                            fullName: fullNameController.text,
+                            email: emailTextController.text,
+                            password: passwordTextController.text,
+                            countryCode:
+                                Localizations.localeOf(context).countryCode,
+                          )));
         },
         isLoading: viewState.viewState.isLoading,
       ),

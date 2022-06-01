@@ -23,14 +23,13 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
     state = state.copyWith(viewState: ViewState.loading);
     try {
       _log.d('Get email token called');
-      _reader(authProvider).setEmail(email: email);
-      await _reader(authProvider).getEmailToken(email: email);
-      goToVerifyEmailView();
+      _reader(authRepository).setEmail(email: email);
+      String? token = await _reader(authRepository).getEmailToken(email: email);
+      _reader(authRepository).setToken(token: token!);
     } on Failure catch (e) {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
-      _reader(snackBarProvider)
-          .showSuccessSnackBar(e.errors?.email?[0] ?? 'An error occurred');
+      _reader(snackBarProvider).showErrorSnackBar('An error occurred');
     } finally {
       state = state.copyWith(viewState: ViewState.idle);
     }
@@ -44,17 +43,21 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
     state = state.copyWith(viewState: ViewState.loading);
     try {
       _log.d('Signup called');
-      await _reader(authProvider).signup(
+      await _reader(authRepository).signup(
         fullName: fullName,
         email: email,
         password: password,
         countryCode: countryCode,
       );
+      _reader(snackBarProvider)
+          .showSuccessSnackBar('User registered successfully');
+      _reader(navigationProvider)
+          .pushNamedAndRemoveUntil(Routes.setPinCodeView, (p0) => false);
     } on Failure catch (e) {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
-      _reader(snackBarProvider).showSuccessSnackBar(
-          '${e.errors?.email?[0] ?? ''}\n${e.errors?.password?[0] ?? ''}');
+      _reader(snackBarProvider).showErrorSnackBar(
+          '${e.errors?['email'] ?? ''}\n${e.errors?['password'] ?? ''}');
     } finally {
       state = state.copyWith(viewState: ViewState.idle);
     }
@@ -64,8 +67,8 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
     state = state.copyWith(passwordVisible: !state.passwordVisible);
   }
 
-  void goToVerifyEmailView() {
-    _reader(navigationProvider).pushNamed(Routes.verifyEmailView);
+  Future<void> goToVerifyEmailView() async {
+    await _reader(navigationProvider).pushNamed(Routes.verifyEmailView);
   }
 
   void goToLoginView() {
