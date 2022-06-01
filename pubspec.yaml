@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
   cupertino_icons: ^1.0.2
 
@@ -22,10 +20,14 @@ dependencies:
   freezed_annotation:
   json_annotation: ^4.5.0
 
+  # storage
+  hive: ^2.2.1
+
   # utilities
   flutter_svg: ^1.0.3
   flutter_screenutil: ^5.5.3+2
   flutter_hooks: ^0.18.4
+  pin_code_fields: ^7.3.0
 
 dev_dependencies:
   flutter_test:
