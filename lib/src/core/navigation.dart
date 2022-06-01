@@ -72,4 +72,10 @@ class Navigation {
   void pop<T extends Object?>([T? result]) {
     navigatorKey.currentState?.pop(result);
   }
+
+  Future<T?>? popAndPushNamed<T extends Object?>(String route,
+      {Object? result, Object? arguments}) {
+    return navigatorKey.currentState
+        ?.popAndPushNamed(route, result: result, arguments: arguments);
+  }
 }
