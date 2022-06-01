@@ -25,8 +25,8 @@ class ResetPasswordViewModel extends StateNotifier<ResetPasswordViewState> {
   Future<void> resendCode() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
-      await _reader(authProvider)
-          .getEmailToken(email: _reader(authProvider).email!);
+      await _reader(authRepository)
+          .getEmailToken(email: _reader(authRepository).email!);
     } on Failure catch (e) {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);

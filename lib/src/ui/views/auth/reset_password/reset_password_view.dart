@@ -11,7 +11,7 @@ import '../../../shared/stateless/gap.dart';
 import '../../../shared/stateless/text_field.dart';
 import '../../../shared/stateless/visibility_toggle.dart';
 
-class ResetPasswordView extends ConsumerWidget {
+class ResetPasswordView extends HookConsumerWidget {
   const ResetPasswordView({Key? key}) : super(key: key);
 
   @override
@@ -27,6 +27,7 @@ class ResetPasswordView extends ConsumerWidget {
         form: Form(
           child: Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextField(
                   hintText: 'Password',
