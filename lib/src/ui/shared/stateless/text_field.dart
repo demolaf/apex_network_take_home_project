@@ -85,11 +85,13 @@ class CustomTextField extends StatelessWidget {
           textInputAction: textInputAction,
           onChanged: onChanged,
           validator: validator,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           onEditingComplete: onEditingComplete,
           inputFormatters: inputFormatters,
           obscuringCharacter: '●',
           decoration: InputDecoration(
             filled: true,
+            errorMaxLines: 4,
             fillColor: textFieldColor,
             hintText: hintText,
             constraints: maxWidth != null
