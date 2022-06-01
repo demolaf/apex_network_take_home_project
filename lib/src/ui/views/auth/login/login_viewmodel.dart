@@ -25,6 +25,10 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
   void goToSignUpView() {
     _reader(navigationProvider).pushNamed(Routes.signupView);
   }
+
+  void goToPasswordRecoveryView() {
+    _reader(navigationProvider).pushNamed(Routes.passwordRecoveryView);
+  }
 }
 
 class LoginViewState {

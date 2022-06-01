@@ -39,7 +39,7 @@ class LoginView extends HookConsumerWidget {
               color: AppColors.kSecondary,
             ),
             children: <TextSpan>[
-              const TextSpan(text: '\n'),
+              const TextSpan(text: '\n\n'),
               TextSpan(
                 text: 'Welcome back, Sign in to your account',
                 style: AppTextStyles.kBodyRegular.copyWith(
@@ -52,6 +52,7 @@ class LoginView extends HookConsumerWidget {
         ),
         form: Form(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTextField(
                 hintText: 'Email',
@@ -76,18 +77,31 @@ class LoginView extends HookConsumerWidget {
                   },
                 ),
               ),
+              Gap.lg,
+              GestureDetector(
+                onTap: () {
+                  ref.read(loginViewModel.notifier).goToPasswordRecoveryView();
+                },
+                child: Text(
+                  'Forgot Password?',
+                  style: AppTextStyles.kBodyBold.copyWith(
+                    color: AppColors.kPrimary,
+                    fontSize: FontSize.s16.sp,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         mainActionButtonText: 'Sign in',
         hasFooterText: true,
-        hasForgotPassword: true,
         isLoading: viewState.viewState.isLoading,
         onFooterActionTapped: () {
           ref.read(loginViewModel.notifier).goToSignUpView();
         },
         footerTextLeading: 'Don’t have an account?',
         footerTextTrailing: 'Sign Up',
+        onMainActionButtonTapped: () {},
       ),
     );
   }
