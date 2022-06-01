@@ -9,7 +9,7 @@ import '../../../core/constants/text_styles.dart';
 import '../../../shared/stateless/text_field.dart';
 import '../base_auth/base_auth_view.dart';
 
-class PasswordRecoveryView extends ConsumerWidget {
+class PasswordRecoveryView extends HookConsumerWidget {
   const PasswordRecoveryView({Key? key}) : super(key: key);
 
   @override
@@ -26,6 +26,7 @@ class PasswordRecoveryView extends ConsumerWidget {
         form: Form(
           child: Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextField(
                   hintText: 'Email',
