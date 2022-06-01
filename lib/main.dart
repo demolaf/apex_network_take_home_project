@@ -1,4 +1,5 @@
 import 'package:apex_network_take_home_project/src/core/navigation.dart';
+import 'package:apex_network_take_home_project/src/services/snackbar_service.dart';
 import 'package:apex_network_take_home_project/src/ui/core/constants/strings.dart';
 import 'package:apex_network_take_home_project/src/ui/core/routes.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class SmartPayApp extends ConsumerWidget {
           onGenerateRoute: Routes.generateRoute,
           initialRoute: Routes.startupView,
           navigatorKey: ref.read(navigationProvider).navigatorKey,
+          scaffoldMessengerKey: ref.read(snackBarProvider).scaffoldMessengerKey,
         );
       },
     );
