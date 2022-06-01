@@ -10,4 +10,16 @@ abstract class Api {
     Options? options,
     ProgressCallback? onReceiveProgress,
   });
+
+  /// For making http post requests
+  Future<dynamic> post(
+    Uri uri, {
+    required Map<String, dynamic> body,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Options? options,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  });
 }
