@@ -13,16 +13,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../shared/stateless/gap.dart';
 
-class BaseAuthenticationView extends ConsumerStatefulWidget {
+class BaseAuthenticationView extends ConsumerWidget {
   final Form form;
   final Widget? headerText;
   final bool canGoBack;
-  final bool hasForgotPassword;
   final bool hasFooterText;
+  final bool hasSocialAuth;
   final String mainActionButtonText;
   final String? footerTextLeading;
   final String? footerTextTrailing;
   final bool isLoading;
+  final void Function() onMainActionButtonTapped;
   final void Function()? onFooterActionTapped;
 
   const BaseAuthenticationView({
@@ -30,24 +31,18 @@ class BaseAuthenticationView extends ConsumerStatefulWidget {
     required this.form,
     this.headerText,
     this.canGoBack = false,
-    this.hasForgotPassword = false,
     required this.mainActionButtonText,
     this.hasFooterText = false,
     this.footerTextLeading,
     this.footerTextTrailing,
     this.onFooterActionTapped,
+    this.hasSocialAuth = true,
     this.isLoading = false,
+    required this.onMainActionButtonTapped,
   }) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _BaseAuthenticationViewState();
-}
-
-class _BaseAuthenticationViewState
-    extends ConsumerState<BaseAuthenticationView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final viewState = ref.watch(baseAuthViewModel);
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -58,7 +53,7 @@ class _BaseAuthenticationViewState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (widget.canGoBack)
+                if (canGoBack)
                   Row(
                     children: [
                       GestureDetector(
@@ -87,29 +82,19 @@ class _BaseAuthenticationViewState
                   ),
                 Gap.lg,
                 // HEADER TEXT
-                widget.headerText!,
+                headerText!,
                 Gap.lg,
                 // FORM
-                widget.form,
-                Gap.lg,
-                if (widget.hasForgotPassword)
-                  Text(
-                    'Forgot Password?',
-                    style: AppTextStyles.kBodyBold.copyWith(
-                      color: AppColors.kPrimary,
-                      fontSize: FontSize.s16.sp,
-                    ),
-                  ),
+                form,
                 Gap.lg,
                 CustomButton(
-                  onPressed: () {},
+                  onPressed: onMainActionButtonTapped,
                   color: AppColors.kSecondary,
                   height: 52.h,
-                  isLoading: !widget.isLoading
-                      ? viewState.viewState.isLoading
-                      : widget.isLoading,
+                  isLoading:
+                      !isLoading ? viewState.viewState.isLoading : isLoading,
                   child: Text(
-                    widget.mainActionButtonText,
+                    mainActionButtonText,
                     style: AppTextStyles.kBodyBold.copyWith(
                       fontSize: FontSize.s16.sp,
                       color: AppColors.kWhite,
@@ -117,154 +102,138 @@ class _BaseAuthenticationViewState
                   ),
                 ),
                 const Gap(32),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        height: 1.h,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColors.kGrey200,
-                              AppColors.kWhite,
-                            ],
-                            stops: [0.25, 0.9],
-                            begin: Alignment.centerRight,
-                            end: Alignment.centerLeft,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Insets.xsm.w),
-                      child: Text(
-                        'OR',
-                        style: AppTextStyles.kBodyRegular.copyWith(
-                          color: AppColors.kGrey500,
-                          fontSize: FontSize.s14.sp,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 1.h,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColors.kGrey200,
-                              AppColors.kWhite,
-                            ],
-                            stops: [0.25, 0.9],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Gap(24),
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          await ref
-                              .read(baseAuthViewModel.notifier)
-                              .loginWithGoogle();
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Logged in with google successfully',
-                                style: AppTextStyles.kBodyMedium,
-                              ),
-                            ),
-                          );
-                        },
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(16),
-                        ),
+                if (hasSocialAuth) ...[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
                         child: Container(
-                          height: 52.h,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Insets.md.w,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(16),
-                            ),
-                            border: Border.all(
-                              color: AppColors.kGrey200,
-                              width: 1.w,
-                            ),
-                          ),
-                          child: Center(
-                            child: FittedBox(
-                              child: SvgPicture.asset(
-                                SvgAssets.googleIcon,
-                                width: FontSize.s24.w,
-                                height: FontSize.s24.h,
-                              ),
+                          height: 1.h,
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                AppColors.kGrey200,
+                                AppColors.kWhite,
+                              ],
+                              stops: [0.25, 0.9],
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Gap.md,
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          await ref
-                              .read(baseAuthViewModel.notifier)
-                              .loginWithApple();
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Logged in with apple successfully',
-                                style: AppTextStyles.kBodyMedium,
-                              ),
-                            ),
-                          );
-                        },
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(16),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: Insets.xsm.w),
+                        child: Text(
+                          'OR',
+                          style: AppTextStyles.kBodyRegular.copyWith(
+                            color: AppColors.kGrey500,
+                            fontSize: FontSize.s14.sp,
+                          ),
                         ),
+                      ),
+                      Expanded(
                         child: Container(
-                          height: 52.h,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(16),
-                            ),
-                            border: Border.all(
-                              color: AppColors.kGrey200,
-                              width: 1.w,
+                          height: 1.h,
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                AppColors.kGrey200,
+                                AppColors.kWhite,
+                              ],
+                              stops: [0.25, 0.9],
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
                             ),
                           ),
-                          child: Center(
-                            child: FittedBox(
-                              child: SvgPicture.asset(
-                                SvgAssets.appleIcon,
-                                width: FontSize.s24.w,
-                                height: FontSize.s24.h,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Gap(24),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async {
+                            await ref
+                                .read(baseAuthViewModel.notifier)
+                                .loginWithGoogle();
+                          },
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(16),
+                          ),
+                          child: Container(
+                            height: 52.h,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Insets.md.w,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                              border: Border.all(
+                                color: AppColors.kGrey200,
+                                width: 1.w,
+                              ),
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                child: SvgPicture.asset(
+                                  SvgAssets.googleIcon,
+                                  width: FontSize.s24.w,
+                                  height: FontSize.s24.h,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                      Gap.md,
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async {
+                            await ref
+                                .read(baseAuthViewModel.notifier)
+                                .loginWithApple();
+                          },
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(16),
+                          ),
+                          child: Container(
+                            height: 52.h,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                              border: Border.all(
+                                color: AppColors.kGrey200,
+                                width: 1.w,
+                              ),
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                child: SvgPicture.asset(
+                                  SvgAssets.appleIcon,
+                                  width: FontSize.s24.w,
+                                  height: FontSize.s24.h,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
-          if (widget.hasFooterText)
+          if (hasFooterText)
             RichText(
               text: TextSpan(
-                text: widget.footerTextLeading,
+                text: footerTextLeading,
                 style: AppTextStyles.kBodyRegular.copyWith(
                   fontSize: FontSize.s16.sp,
                   color: AppColors.kGrey500,
@@ -272,9 +241,9 @@ class _BaseAuthenticationViewState
                 children: <TextSpan>[
                   const TextSpan(text: ' '),
                   TextSpan(
-                    text: widget.footerTextTrailing,
+                    text: footerTextTrailing,
                     recognizer: TapGestureRecognizer()
-                      ..onTap = widget.onFooterActionTapped,
+                      ..onTap = onFooterActionTapped,
                     style: AppTextStyles.kBodyBold.copyWith(
                       fontSize: FontSize.s16.sp,
                       color: AppColors.kPrimary,

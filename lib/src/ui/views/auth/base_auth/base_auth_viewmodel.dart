@@ -1,4 +1,5 @@
 import 'package:apex_network_take_home_project/src/core/navigation.dart';
+import 'package:apex_network_take_home_project/src/services/snackbar_service.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/enums/view_state.dart';
@@ -16,7 +17,9 @@ class BaseAuthViewModel extends StateNotifier<BaseAuthViewState> {
   Future<void> loginWithGoogle() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2)).then((value) =>
+          _reader(snackBarProvider)
+              .showSuccessSnackBar('Logged in with google successfully'));
       // Add google login functionality
     } catch (e) {
       state = state.copyWith(viewState: ViewState.error);
@@ -28,7 +31,9 @@ class BaseAuthViewModel extends StateNotifier<BaseAuthViewState> {
   Future<void> loginWithApple() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2)).then((value) =>
+          _reader(snackBarProvider)
+              .showSuccessSnackBar('Logged in with apple successfully'));
       // Add apple login functionality
     } catch (e) {
       state = state.copyWith(viewState: ViewState.error);
