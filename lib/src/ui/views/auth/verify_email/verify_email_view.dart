@@ -14,13 +14,17 @@ import '../../../shared/stateless/gap.dart';
 import '../base_auth/base_auth_view.dart';
 
 class VerifyEmailView extends HookConsumerWidget {
-  const VerifyEmailView({Key? key}) : super(key: key);
+  VerifyEmailView({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewState = ref.watch(verifyEmailViewModel);
-    final otpController = useTextEditingController();
+    final otpController = useTextEditingController(
+        text: ref.watch(verifyEmailViewModel.notifier).token);
     final otpFocusNode = useFocusNode();
+    otpFocusNode.requestFocus();
     return Scaffold(
       backgroundColor: AppColors.kWhite,
       appBar: AppBar(
@@ -31,6 +35,7 @@ class VerifyEmailView extends HookConsumerWidget {
       extendBodyBehindAppBar: true,
       body: BaseAuthenticationView(
         canGoBack: true,
+        hasSocialAuth: false,
         headerText: RichText(
           text: TextSpan(
             text: 'Verify it’s you',
@@ -52,70 +57,86 @@ class VerifyEmailView extends HookConsumerWidget {
           ),
         ),
         form: Form(
-          child: PinCodeTextField(
-            appContext: context,
-            pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
-              fontSize: FontSize.s24,
+          key: _formKey,
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PinCodeTextField(
+                  appContext: context,
+                  pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
+                    fontSize: FontSize.s24,
+                  ),
+                  textStyle: AppTextStyles.kBodyBold.copyWith(
+                    fontSize: FontSize.s24,
+                  ),
+                  validator: context.validateOTP,
+                  length: 5,
+                  obscureText: false,
+                  animationType: AnimationType.fade,
+                  focusNode: otpFocusNode,
+                  enableActiveFill: true,
+                  showCursor: false,
+                  pinTheme: PinTheme(
+                    selectedColor: AppColors.kPrimary,
+                    selectedFillColor: AppColors.kGrey50,
+                    shape: PinCodeFieldShape.box,
+                    activeColor: AppColors.kPrimary,
+                    disabledColor: AppColors.kGrey200,
+                    inactiveColor: Colors.transparent,
+                    inactiveFillColor: AppColors.kGrey50,
+                    borderWidth: 1.w,
+                    borderRadius: BorderRadius.circular(12.r),
+                    errorBorderColor: Colors.red,
+                    fieldHeight: 64,
+                    fieldWidth: 64,
+                    activeFillColor: AppColors.kGrey50,
+                  ),
+                  cursorColor: AppColors.kSecondary,
+                  animationDuration: const Duration(milliseconds: 300),
+                  controller: otpController,
+                  onChanged: (String value) {},
+                  keyboardType: TextInputType.number,
+                  beforeTextPaste: (text) {
+                    if (text != null && int.tryParse(text) != null) {
+                      return true;
+                    }
+                    return false;
+                  },
+                ),
+                Gap.lg,
+                Center(
+                  child: GestureDetector(
+                    onTap: () async {
+                      await ref
+                          .read(verifyEmailViewModel.notifier)
+                          .resendCode();
+                    },
+                    child: Text(
+                      'Resend Code',
+                      style: AppTextStyles.kBodyBold.copyWith(
+                        color: AppColors.kPrimary,
+                        fontSize: FontSize.s16.sp,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            textStyle: AppTextStyles.kBodyBold.copyWith(
-              fontSize: FontSize.s24,
-            ),
-            validator: context.validateOTP,
-            length: 5,
-            obscureText: false,
-            animationType: AnimationType.fade,
-            focusNode: otpFocusNode,
-            enableActiveFill: true,
-            pinTheme: PinTheme(
-              selectedColor: AppColors.kPrimary,
-              selectedFillColor: AppColors.kGrey50,
-              shape: PinCodeFieldShape.box,
-              activeColor: AppColors.kPrimary,
-              disabledColor: AppColors.kGrey200,
-              inactiveColor: Colors.transparent,
-              inactiveFillColor: AppColors.kGrey50,
-              borderWidth: 1.w,
-              borderRadius: BorderRadius.circular(12.r),
-              errorBorderColor: Colors.red,
-              fieldHeight: 64,
-              fieldWidth: 64,
-              activeFillColor: AppColors.kGrey50,
-            ),
-            cursorColor: AppColors.kSecondary,
-            animationDuration: const Duration(milliseconds: 300),
-            controller: otpController,
-            onChanged: (String value) {},
-            keyboardType: TextInputType.number,
-            beforeTextPaste: (text) {
-              if (text != null && int.tryParse(text) != null) {
-                return true;
-              }
-              return false;
-            },
           ),
         ),
         mainActionButtonText: 'Confirm',
-        customBottomText: Column(
-          children: [
-            Center(
-              child: GestureDetector(
-                onTap: () async {
-                  await ref.read(verifyEmailViewModel.notifier).resendCode();
-                },
-                child: Text(
-                  'Resend Code',
-                  style: AppTextStyles.kBodyBold.copyWith(
-                    color: AppColors.kPrimary,
-                    fontSize: FontSize.s16.sp,
-                  ),
-                ),
-              ),
-            ),
-            Gap.lg,
-          ],
-        ),
         isLoading: viewState.viewState.isLoading,
-        onMainActionButtonTapped: () {},
+        onMainActionButtonTapped: () async {
+          if (!_formKey.currentState!.validate()) {
+            return;
+          }
+          await ref
+              .read(verifyEmailViewModel.notifier)
+              .verifyEmailWithToken(token: otpController.text)
+              .then((value) =>
+                  ref.read(verifyEmailViewModel.notifier).goToSignupView());
+        },
       ),
     );
   }
