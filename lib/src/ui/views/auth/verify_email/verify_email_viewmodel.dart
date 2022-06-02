@@ -9,8 +9,8 @@ import 'package:logger/logger.dart';
 
 import '../../../core/enums/view_state.dart';
 
-final verifyEmailViewModel = StateNotifierProvider.autoDispose<
-    VerifyEmailViewModel, VerifyEmailViewState>(
+final verifyEmailViewModel =
+    StateNotifierProvider<VerifyEmailViewModel, VerifyEmailViewState>(
   (ref) => VerifyEmailViewModel(ref.read),
 );
 
