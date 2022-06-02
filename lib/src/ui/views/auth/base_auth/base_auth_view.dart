@@ -53,33 +53,34 @@ class BaseAuthenticationView extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (canGoBack)
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          ref.read(baseAuthViewModel.notifier).goBack();
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(Insets.xsm.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(Insets.xsm.r),
-                            ),
-                            border: Border.all(
-                              color: AppColors.kGrey200,
-                              width: 1.w,
+                canGoBack
+                    ? Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              ref.read(baseAuthViewModel.notifier).goBack();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(Insets.xsm.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(Insets.xsm.r),
+                                ),
+                                border: Border.all(
+                                  color: AppColors.kGrey200,
+                                  width: 1.w,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.adaptive.arrow_back_rounded,
+                                color: AppColors.kSecondary,
+                                size: IconSize.sm.w,
+                              ),
                             ),
                           ),
-                          child: Icon(
-                            Icons.adaptive.arrow_back_rounded,
-                            color: AppColors.kSecondary,
-                            size: IconSize.sm.w,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                        ],
+                      )
+                    : Gap.lg,
                 Gap.lg,
                 // HEADER TEXT
                 headerText!,
