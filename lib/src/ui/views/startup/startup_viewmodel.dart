@@ -1,3 +1,4 @@
+import 'package:apex_network_take_home_project/src/repository/auth/auth_impl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,9 +17,32 @@ class StartupViewModel extends ChangeNotifier {
 
   /// Any startup initialization can be done here
   void initialize() async {
-    await Future.delayed(const Duration(seconds: 2)).then(
-      (value) => _reader(navigationProvider)
-          .pushNamedAndRemoveUntil(Routes.loginView, (_) => false),
-    );
+    await checkLoggedIn();
+  }
+
+  Future<void> checkLoggedIn() async {
+    bool isAuthorized = await _reader(authRepository).hasAuthToken();
+    bool hasSavedPinCode = await _reader(authRepository).hasPinCode();
+    if (isAuthorized && hasSavedPinCode) {
+      goToLoginWithPinView();
+    } else if (!hasSavedPinCode && isAuthorized) {
+      goToSetPinCodeView();
+    } else {
+      goToOnBoardingView();
+    }
+  }
+
+  void goToSetPinCodeView() {
+    _reader(navigationProvider).pushNamed(Routes.setPinCodeView);
+  }
+
+  void goToOnBoardingView() {
+    _reader(navigationProvider)
+        .pushNamedAndRemoveUntil(Routes.onBoardingView, (_) => false);
+  }
+
+  void goToLoginWithPinView() {
+    _reader(navigationProvider)
+        .pushNamedAndRemoveUntil(Routes.loginWithPinView, (_) => false);
   }
 }

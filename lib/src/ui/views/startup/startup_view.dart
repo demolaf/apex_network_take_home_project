@@ -1,10 +1,10 @@
+import 'package:apex_network_take_home_project/src/ui/core/constants/image_assets.dart';
 import 'package:apex_network_take_home_project/src/ui/views/startup/startup_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../core/constants/colors.dart';
-import '../../core/constants/strings.dart';
-import '../../core/constants/text_styles.dart';
 import '../../shared/stateless/circular_loading_indicator.dart';
 import '../../shared/stateless/gap.dart';
 
@@ -42,15 +42,14 @@ class StartupViewBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            AppStrings.kLoading,
-            style: AppTextStyles.kBodyMedium.copyWith(
-              color: AppColors.kSecondary,
-            ),
+          Image.asset(
+            ImageAssets.splashLogo,
+            width: 200.w,
           ),
-          Gap.sm,
-          const CustomProgressIndicator(
+          const Gap(64),
+          CustomProgressIndicator(
             color: AppColors.kGrey500,
+            radius: 16.r,
           ),
         ],
       ),
