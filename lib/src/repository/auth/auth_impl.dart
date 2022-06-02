@@ -117,7 +117,7 @@ class AuthImpl implements Auth {
 
   @override
   Future<void> logout() async {
-    await _api.post(ApiBase.logout, body: {});
+    _api.post(ApiBase.logout, body: {});
     await _localStorage.then(
       (storage) async => await storage.delete(HiveStorageKeys.authDataBox,
           key: HiveTypeIdKeys.authDataTypeIdKey),
