@@ -4,6 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../ui/core/constants/text_styles.dart';
 
+final snackBarProvider = Provider(
+  (ref) => SnackBarService(),
+);
+
 class SnackBarService {
   final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -37,5 +41,3 @@ class SnackBarService {
     );
   }
 }
-
-final snackBarProvider = Provider((ref) => SnackBarService());
