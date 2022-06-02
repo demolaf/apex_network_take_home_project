@@ -1,27 +1,33 @@
 import 'dart:convert';
 
+import 'package:apex_network_take_home_project/src/core/constants/hive_storage_keys.dart';
+import 'package:apex_network_take_home_project/src/core/constants/hive_type_id_keys.dart';
+import 'package:apex_network_take_home_project/src/services/local_storage/local_storage.dart';
+import 'package:apex_network_take_home_project/src/services/local_storage/local_storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
 import '../../core/constants/api_base.dart';
+import '../../model/auth/auth_user.dart';
 import 'api.dart';
 import 'failure.dart';
 
 /// Api Service Provider
 final apiProvider = Provider<Api>(
-  (ref) {
-    return ApiImpl();
-  },
+  (ref) => ApiService(
+    ref.watch(localStorageProvider.future),
+  ),
 );
 
-class ApiImpl implements Api {
-  ApiImpl() {
+class ApiService implements Api {
+  ApiService(this._localStorage) {
     initialize();
   }
 
   final _log = Logger(filter: DevelopmentFilter());
+  final Future<LocalStorage> _localStorage;
 
   late final Dio _http;
 
@@ -49,7 +55,21 @@ class ApiImpl implements Api {
 
     _http.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+        onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          AuthData? auth;
+          try {
+            auth = await _localStorage.then((storage) async =>
+                await storage.get(HiveStorageKeys.authDataBox,
+                    key: HiveTypeIdKeys.authDataTypeIdKey));
+            _log.i("Auth user data exists ${auth?.token?.length}");
+          } catch (e) {
+            _log.e("No auth user data");
+          }
+
+          if (!options.path.contains('auth')) {
+            options.headers['Authorization'] = 'Bearer ${auth?.token}';
+          }
           return handler.next(options);
         },
         onResponse: (Response response, ResponseInterceptorHandler handler) {
@@ -112,9 +132,9 @@ class ApiImpl implements Api {
       _log.e(e.error);
       _log.e('Check here for errors api ${e.response?.data}');
       throw Failure(
-          message: Failure.fromJson(e.response?.data).message,
-          data: Failure.fromJson(e.response?.data).data,
-          errors: Failure.fromJson(e.response?.data).errors);
+          message: Failure.fromJson(e.response?.data ?? '' ?? []).message,
+          data: Failure.fromJson(e.response?.data ?? [] ?? {}).data,
+          errors: Failure.fromJson(e.response?.data ?? {} ?? []).errors);
     } catch (e) {
       _log.e(e);
       throw Failure(
