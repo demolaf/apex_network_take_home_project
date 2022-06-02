@@ -10,7 +10,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/component_sizes.dart';
 import '../../../core/constants/text_styles.dart';
-import '../../../shared/stateless/gap.dart';
 import '../base_auth/base_auth_view.dart';
 
 class SetPinCodeView extends HookConsumerWidget {
@@ -108,10 +107,16 @@ class SetPinCodeView extends HookConsumerWidget {
         ),
         mainActionButtonText: 'Create PIN',
         isLoading: viewState.viewState.isLoading,
-        onMainActionButtonTapped: () {
+        onMainActionButtonTapped: () async {
           if (!_formKey.currentState!.validate()) {
             return;
           }
+          await ref
+              .read(setPinCodeViewModel.notifier)
+              .setAndSaveUserPinCode(pinCode: pinController.text)
+              .then((value) => ref
+                  .read(setPinCodeViewModel.notifier)
+                  .checkIfRegisterFlowAndNavigate());
         },
       ),
     );
