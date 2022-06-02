@@ -50,20 +50,22 @@ class PasswordRecoveryView extends HookConsumerWidget {
         form: Form(
           key: _formKey,
           child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextField(
-                  hintText: 'Email',
-                  controller: emailTextController,
-                  textFieldColor: AppColors.kGrey50,
-                  validator: context.validateEmail,
-                  keyBoardType: TextInputType.emailAddress,
-                  textStyle: AppTextStyles.kBodySemiBold.copyWith(
-                    fontSize: FontSize.s16.sp,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextField(
+                    hintText: 'Email',
+                    controller: emailTextController,
+                    textFieldColor: AppColors.kGrey50,
+                    validator: context.validateEmail,
+                    keyBoardType: TextInputType.emailAddress,
+                    textStyle: AppTextStyles.kBodySemiBold.copyWith(
+                      fontSize: FontSize.s16.sp,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

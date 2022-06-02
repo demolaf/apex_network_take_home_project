@@ -58,51 +58,53 @@ class SetPinCodeView extends HookConsumerWidget {
         form: Form(
           key: _formKey,
           child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PinCodeTextField(
-                  appContext: context,
-                  pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
-                    fontSize: FontSize.s24,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PinCodeTextField(
+                    appContext: context,
+                    pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
+                      fontSize: FontSize.s24,
+                    ),
+                    textStyle: AppTextStyles.kBodyBold.copyWith(
+                      fontSize: FontSize.s24,
+                    ),
+                    validator: context.validateOTP,
+                    length: 5,
+                    obscureText: true,
+                    animationType: AnimationType.fade,
+                    focusNode: pinFocusNode,
+                    enableActiveFill: true,
+                    pinTheme: PinTheme(
+                      selectedColor: AppColors.kPrimary,
+                      selectedFillColor: AppColors.kWhite,
+                      shape: PinCodeFieldShape.underline,
+                      activeColor: AppColors.kPrimary,
+                      disabledColor: AppColors.kGrey200,
+                      inactiveColor: Colors.transparent,
+                      inactiveFillColor: AppColors.kWhite,
+                      borderWidth: 1.w,
+                      borderRadius: BorderRadius.circular(12.r),
+                      errorBorderColor: Colors.red,
+                      fieldHeight: 64,
+                      fieldWidth: 64,
+                      activeFillColor: AppColors.kWhite,
+                    ),
+                    cursorColor: AppColors.kPrimary,
+                    animationDuration: const Duration(milliseconds: 300),
+                    controller: pinController,
+                    onChanged: (String value) {},
+                    keyboardType: TextInputType.number,
+                    beforeTextPaste: (text) {
+                      if (text != null && int.tryParse(text) != null) {
+                        return true;
+                      }
+                      return false;
+                    },
                   ),
-                  textStyle: AppTextStyles.kBodyBold.copyWith(
-                    fontSize: FontSize.s24,
-                  ),
-                  validator: context.validateOTP,
-                  length: 5,
-                  obscureText: true,
-                  animationType: AnimationType.fade,
-                  focusNode: pinFocusNode,
-                  enableActiveFill: true,
-                  pinTheme: PinTheme(
-                    selectedColor: AppColors.kPrimary,
-                    selectedFillColor: AppColors.kWhite,
-                    shape: PinCodeFieldShape.underline,
-                    activeColor: AppColors.kPrimary,
-                    disabledColor: AppColors.kGrey200,
-                    inactiveColor: Colors.transparent,
-                    inactiveFillColor: AppColors.kWhite,
-                    borderWidth: 1.w,
-                    borderRadius: BorderRadius.circular(12.r),
-                    errorBorderColor: Colors.red,
-                    fieldHeight: 64,
-                    fieldWidth: 64,
-                    activeFillColor: AppColors.kWhite,
-                  ),
-                  cursorColor: AppColors.kPrimary,
-                  animationDuration: const Duration(milliseconds: 300),
-                  controller: pinController,
-                  onChanged: (String value) {},
-                  keyboardType: TextInputType.number,
-                  beforeTextPaste: (text) {
-                    if (text != null && int.tryParse(text) != null) {
-                      return true;
-                    }
-                    return false;
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

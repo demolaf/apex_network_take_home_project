@@ -33,33 +33,35 @@ class ResetPasswordView extends HookConsumerWidget {
         hasSocialAuth: false,
         form: Form(
           child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextField(
-                  hintText: 'Password',
-                  textFieldColor: AppColors.kGrey50,
-                  keyBoardType: TextInputType.visiblePassword,
-                  validator: context.validatePassword,
-                  obscureText: !viewState.passwordVisible,
-                  suffixIcon: CustomVisibilityButton(
-                    obscureText: viewState.passwordVisible,
-                    onTap: () {},
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextField(
+                    hintText: 'Password',
+                    textFieldColor: AppColors.kGrey50,
+                    keyBoardType: TextInputType.visiblePassword,
+                    validator: context.validatePassword,
+                    obscureText: !viewState.passwordVisible,
+                    suffixIcon: CustomVisibilityButton(
+                      obscureText: viewState.passwordVisible,
+                      onTap: () {},
+                    ),
                   ),
-                ),
-                Gap.md,
-                CustomTextField(
-                  hintText: 'Confirm password',
-                  textFieldColor: AppColors.kGrey50,
-                  keyBoardType: TextInputType.visiblePassword,
-                  validator: context.validateNotEmptyField,
-                  obscureText: !viewState.confirmPasswordVisible,
-                  suffixIcon: CustomVisibilityButton(
-                    obscureText: viewState.confirmPasswordVisible,
-                    onTap: () {},
+                  Gap.md,
+                  CustomTextField(
+                    hintText: 'Confirm password',
+                    textFieldColor: AppColors.kGrey50,
+                    keyBoardType: TextInputType.visiblePassword,
+                    validator: context.validateNotEmptyField,
+                    obscureText: !viewState.confirmPasswordVisible,
+                    suffixIcon: CustomVisibilityButton(
+                      obscureText: viewState.confirmPasswordVisible,
+                      onTap: () {},
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

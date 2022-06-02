@@ -56,48 +56,52 @@ class LoginView extends HookConsumerWidget {
         ),
         form: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextField(
-                hintText: 'Email',
-                controller: emailTextController,
-                textFieldColor: AppColors.kGrey50,
-                validator: context.validateEmail,
-                keyBoardType: TextInputType.emailAddress,
-                textStyle: AppTextStyles.kBodySemiBold.copyWith(
-                  fontSize: FontSize.s16.sp,
-                ),
-              ),
-              Gap.md,
-              CustomTextField(
-                hintText: 'Password',
-                controller: passwordTextController,
-                textFieldColor: AppColors.kGrey50,
-                keyBoardType: TextInputType.visiblePassword,
-                validator: context.validateNotEmptyField,
-                obscureText: !viewState.passwordVisible,
-                suffixIcon: CustomVisibilityButton(
-                  obscureText: viewState.passwordVisible,
-                  onTap: () {
-                    ref.read(loginViewModel.notifier).togglePasswordVisible();
-                  },
-                ),
-              ),
-              Gap.lg,
-              GestureDetector(
-                onTap: () {
-                  ref.read(loginViewModel.notifier).goToPasswordRecoveryView();
-                },
-                child: Text(
-                  'Forgot Password?',
-                  style: AppTextStyles.kBodyBold.copyWith(
-                    color: AppColors.kPrimary,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextField(
+                  hintText: 'Email',
+                  controller: emailTextController,
+                  textFieldColor: AppColors.kGrey50,
+                  validator: context.validateEmail,
+                  keyBoardType: TextInputType.emailAddress,
+                  textStyle: AppTextStyles.kBodySemiBold.copyWith(
                     fontSize: FontSize.s16.sp,
                   ),
                 ),
-              ),
-            ],
+                Gap.md,
+                CustomTextField(
+                  hintText: 'Password',
+                  controller: passwordTextController,
+                  textFieldColor: AppColors.kGrey50,
+                  keyBoardType: TextInputType.visiblePassword,
+                  validator: context.validateNotEmptyField,
+                  obscureText: !viewState.passwordVisible,
+                  suffixIcon: CustomVisibilityButton(
+                    obscureText: viewState.passwordVisible,
+                    onTap: () {
+                      ref.read(loginViewModel.notifier).togglePasswordVisible();
+                    },
+                  ),
+                ),
+                Gap.lg,
+                GestureDetector(
+                  onTap: () {
+                    ref
+                        .read(loginViewModel.notifier)
+                        .goToPasswordRecoveryView();
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: AppTextStyles.kBodyBold.copyWith(
+                      color: AppColors.kPrimary,
+                      fontSize: FontSize.s16.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         mainActionButtonText: 'Sign in',

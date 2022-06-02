@@ -71,84 +71,86 @@ class _LoginWithPinViewState extends ConsumerState<LoginWithPinView> {
         form: Form(
           key: _formKey,
           child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.account_circle_rounded,
-                  size: 72.w,
-                  color: AppColors.kGrey300,
-                ),
-                Gap.lg,
-                Text(
-                  '${ref.watch(loginWithPinViewModel).fullName}',
-                  style: AppTextStyles.kBodyMedium.copyWith(
-                    fontSize: FontSize.s20.sp,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.account_circle_rounded,
+                    size: 72.w,
+                    color: AppColors.kGrey300,
                   ),
-                ),
-                Gap.md,
-                PinCodeTextField(
-                  appContext: context,
-                  pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
-                    fontSize: FontSize.s24.sp,
+                  Gap.lg,
+                  Text(
+                    '${ref.watch(loginWithPinViewModel).fullName}',
+                    style: AppTextStyles.kBodyMedium.copyWith(
+                      fontSize: FontSize.s20.sp,
+                    ),
                   ),
-                  textStyle: AppTextStyles.kBodyBold.copyWith(
-                    fontSize: FontSize.s24.sp,
-                  ),
-                  validator: context.validateOTP,
-                  length: 5,
-                  obscureText: true,
-                  animationType: AnimationType.fade,
-                  focusNode: pinFocusNode,
-                  enableActiveFill: true,
-                  pinTheme: PinTheme(
-                    selectedColor: AppColors.kPrimary,
-                    selectedFillColor: AppColors.kWhite,
-                    shape: PinCodeFieldShape.underline,
-                    activeColor: AppColors.kPrimary,
-                    disabledColor: AppColors.kGrey200,
-                    inactiveColor: Colors.transparent,
-                    inactiveFillColor: AppColors.kWhite,
-                    borderWidth: 1.w,
-                    borderRadius: BorderRadius.circular(12.r),
-                    errorBorderColor: Colors.red,
-                    fieldHeight: 64,
-                    fieldWidth: 64,
-                    activeFillColor: AppColors.kWhite,
-                  ),
-                  cursorColor: AppColors.kPrimary,
-                  animationDuration: const Duration(milliseconds: 300),
-                  controller: pinController,
-                  onChanged: (String value) {},
-                  keyboardType: TextInputType.number,
-                  beforeTextPaste: (text) {
-                    if (text != null && int.tryParse(text) != null) {
-                      return true;
-                    }
-                    return false;
-                  },
-                ),
-                Gap.lg,
-                Center(
-                  child: GestureDetector(
-                    onTap: () async {
-                      await ref
-                          .read(loginWithPinViewModel.notifier)
-                          .logout()
-                          .then((value) => ref
-                              .read(loginWithPinViewModel.notifier)
-                              .goToLoginView());
+                  Gap.md,
+                  PinCodeTextField(
+                    appContext: context,
+                    pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
+                      fontSize: FontSize.s24.sp,
+                    ),
+                    textStyle: AppTextStyles.kBodyBold.copyWith(
+                      fontSize: FontSize.s24.sp,
+                    ),
+                    validator: context.validateOTP,
+                    length: 5,
+                    obscureText: true,
+                    animationType: AnimationType.fade,
+                    focusNode: pinFocusNode,
+                    enableActiveFill: true,
+                    pinTheme: PinTheme(
+                      selectedColor: AppColors.kPrimary,
+                      selectedFillColor: AppColors.kWhite,
+                      shape: PinCodeFieldShape.underline,
+                      activeColor: AppColors.kPrimary,
+                      disabledColor: AppColors.kGrey200,
+                      inactiveColor: Colors.transparent,
+                      inactiveFillColor: AppColors.kWhite,
+                      borderWidth: 1.w,
+                      borderRadius: BorderRadius.circular(12.r),
+                      errorBorderColor: Colors.red,
+                      fieldHeight: 64,
+                      fieldWidth: 64,
+                      activeFillColor: AppColors.kWhite,
+                    ),
+                    cursorColor: AppColors.kPrimary,
+                    animationDuration: const Duration(milliseconds: 300),
+                    controller: pinController,
+                    onChanged: (String value) {},
+                    keyboardType: TextInputType.number,
+                    beforeTextPaste: (text) {
+                      if (text != null && int.tryParse(text) != null) {
+                        return true;
+                      }
+                      return false;
                     },
-                    child: Text(
-                      'Logout',
-                      style: AppTextStyles.kBodyBold.copyWith(
-                        color: AppColors.kPrimary,
-                        fontSize: FontSize.s16.sp,
+                  ),
+                  Gap.lg,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        await ref
+                            .read(loginWithPinViewModel.notifier)
+                            .logout()
+                            .then((value) => ref
+                                .read(loginWithPinViewModel.notifier)
+                                .goToLoginView());
+                      },
+                      child: Text(
+                        'Logout',
+                        style: AppTextStyles.kBodyBold.copyWith(
+                          color: AppColors.kPrimary,
+                          fontSize: FontSize.s16.sp,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

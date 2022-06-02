@@ -86,9 +86,7 @@ class BaseAuthenticationView extends ConsumerWidget {
                 headerText!,
                 Gap.lg,
                 // FORM
-                SingleChildScrollView(
-                  child: form,
-                ),
+                form,
                 Gap.lg,
                 CustomButton(
                   onPressed: onMainActionButtonTapped,

@@ -60,69 +60,71 @@ class VerifyEmailTokenView extends HookConsumerWidget {
         form: Form(
           key: _formKey,
           child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PinCodeTextField(
-                  appContext: context,
-                  pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
-                    fontSize: FontSize.s24,
-                  ),
-                  textStyle: AppTextStyles.kBodyBold.copyWith(
-                    fontSize: FontSize.s24,
-                  ),
-                  validator: context.validateOTP,
-                  length: 5,
-                  obscureText: false,
-                  animationType: AnimationType.fade,
-                  focusNode: otpFocusNode,
-                  enableActiveFill: true,
-                  showCursor: false,
-                  pinTheme: PinTheme(
-                    selectedColor: AppColors.kPrimary,
-                    selectedFillColor: AppColors.kGrey50,
-                    shape: PinCodeFieldShape.box,
-                    activeColor: AppColors.kPrimary,
-                    disabledColor: AppColors.kGrey200,
-                    inactiveColor: Colors.transparent,
-                    inactiveFillColor: AppColors.kGrey50,
-                    borderWidth: 1.w,
-                    borderRadius: BorderRadius.circular(12.r),
-                    errorBorderColor: Colors.red,
-                    fieldHeight: 64,
-                    fieldWidth: 64,
-                    activeFillColor: AppColors.kGrey50,
-                  ),
-                  cursorColor: AppColors.kSecondary,
-                  animationDuration: const Duration(milliseconds: 300),
-                  controller: otpController,
-                  onChanged: (String value) {},
-                  keyboardType: TextInputType.number,
-                  beforeTextPaste: (text) {
-                    if (text != null && int.tryParse(text) != null) {
-                      return true;
-                    }
-                    return false;
-                  },
-                ),
-                Gap.lg,
-                Center(
-                  child: GestureDetector(
-                    onTap: () async {
-                      await ref
-                          .read(verifyEmailTokenViewModel.notifier)
-                          .resendCode();
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PinCodeTextField(
+                    appContext: context,
+                    pastedTextStyle: AppTextStyles.kBodyBold.copyWith(
+                      fontSize: FontSize.s24,
+                    ),
+                    textStyle: AppTextStyles.kBodyBold.copyWith(
+                      fontSize: FontSize.s24,
+                    ),
+                    validator: context.validateOTP,
+                    length: 5,
+                    obscureText: false,
+                    animationType: AnimationType.fade,
+                    focusNode: otpFocusNode,
+                    enableActiveFill: true,
+                    showCursor: false,
+                    pinTheme: PinTheme(
+                      selectedColor: AppColors.kPrimary,
+                      selectedFillColor: AppColors.kGrey50,
+                      shape: PinCodeFieldShape.box,
+                      activeColor: AppColors.kPrimary,
+                      disabledColor: AppColors.kGrey200,
+                      inactiveColor: Colors.transparent,
+                      inactiveFillColor: AppColors.kGrey50,
+                      borderWidth: 1.w,
+                      borderRadius: BorderRadius.circular(12.r),
+                      errorBorderColor: Colors.red,
+                      fieldHeight: 64,
+                      fieldWidth: 64,
+                      activeFillColor: AppColors.kGrey50,
+                    ),
+                    cursorColor: AppColors.kSecondary,
+                    animationDuration: const Duration(milliseconds: 300),
+                    controller: otpController,
+                    onChanged: (String value) {},
+                    keyboardType: TextInputType.number,
+                    beforeTextPaste: (text) {
+                      if (text != null && int.tryParse(text) != null) {
+                        return true;
+                      }
+                      return false;
                     },
-                    child: Text(
-                      'Resend Code',
-                      style: AppTextStyles.kBodyBold.copyWith(
-                        color: AppColors.kPrimary,
-                        fontSize: FontSize.s16.sp,
+                  ),
+                  Gap.lg,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        await ref
+                            .read(verifyEmailTokenViewModel.notifier)
+                            .resendCode();
+                      },
+                      child: Text(
+                        'Resend Code',
+                        style: AppTextStyles.kBodyBold.copyWith(
+                          color: AppColors.kPrimary,
+                          fontSize: FontSize.s16.sp,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

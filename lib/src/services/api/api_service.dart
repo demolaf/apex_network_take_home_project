@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:apex_network_take_home_project/src/core/constants/hive_storage_keys.dart';
 import 'package:apex_network_take_home_project/src/core/constants/hive_type_id_keys.dart';
+import 'package:apex_network_take_home_project/src/services/api/interceptors/auth_api_interceptor.dart';
 import 'package:apex_network_take_home_project/src/services/local_storage/local_storage.dart';
 import 'package:apex_network_take_home_project/src/services/local_storage/local_storage_service.dart';
 import 'package:dio/dio.dart';
@@ -53,33 +54,7 @@ class ApiService implements Api {
           requestBody: true));
     }
 
-    _http.interceptors.add(
-      InterceptorsWrapper(
-        onRequest:
-            (RequestOptions options, RequestInterceptorHandler handler) async {
-          AuthData? auth;
-          try {
-            auth = await _localStorage.then((storage) async =>
-                await storage.get(HiveStorageKeys.authDataBox,
-                    key: HiveTypeIdKeys.authDataTypeIdKey));
-            _log.i("Auth user data exists ${auth?.token?.length}");
-          } catch (e) {
-            _log.e("No auth user data");
-          }
-
-          if (!options.path.contains('auth')) {
-            options.headers['Authorization'] = 'Bearer ${auth?.token}';
-          }
-          return handler.next(options);
-        },
-        onResponse: (Response response, ResponseInterceptorHandler handler) {
-          return handler.next(response);
-        },
-        onError: (DioError e, ErrorInterceptorHandler handler) {
-          return handler.next(e);
-        },
-      ),
-    );
+    _http.interceptors.add(AuthApiInterceptor(_localStorage));
   }
 
   @override

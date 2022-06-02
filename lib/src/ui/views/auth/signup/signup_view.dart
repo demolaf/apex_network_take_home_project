@@ -72,45 +72,49 @@ class SignupView extends HookConsumerWidget {
         footerTextTrailing: 'Sign In',
         form: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomTextField(
-                hintText: 'Full name',
-                controller: fullNameController,
-                textFieldColor: AppColors.kGrey50,
-                keyBoardType: TextInputType.name,
-                validator: context.validateFullName,
-                textStyle: AppTextStyles.kBodySemiBold.copyWith(
-                  fontSize: FontSize.s16.sp,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextField(
+                  hintText: 'Full name',
+                  controller: fullNameController,
+                  textFieldColor: AppColors.kGrey50,
+                  keyBoardType: TextInputType.name,
+                  validator: context.validateFullName,
+                  textStyle: AppTextStyles.kBodySemiBold.copyWith(
+                    fontSize: FontSize.s16.sp,
+                  ),
                 ),
-              ),
-              Gap.md,
-              CustomTextField(
-                hintText: 'Email',
-                controller: emailTextController,
-                textFieldColor: AppColors.kGrey50,
-                keyBoardType: TextInputType.emailAddress,
-                validator: context.validateEmail,
-                textStyle: AppTextStyles.kBodySemiBold.copyWith(
-                  fontSize: FontSize.s16.sp,
+                Gap.md,
+                CustomTextField(
+                  hintText: 'Email',
+                  controller: emailTextController,
+                  textFieldColor: AppColors.kGrey50,
+                  keyBoardType: TextInputType.emailAddress,
+                  validator: context.validateEmail,
+                  textStyle: AppTextStyles.kBodySemiBold.copyWith(
+                    fontSize: FontSize.s16.sp,
+                  ),
                 ),
-              ),
-              Gap.md,
-              CustomTextField(
-                hintText: 'Password',
-                controller: passwordTextController,
-                textFieldColor: AppColors.kGrey50,
-                obscureText: !viewState.passwordVisible,
-                validator: context.validatePassword,
-                suffixIcon: CustomVisibilityButton(
-                  obscureText: viewState.passwordVisible,
-                  onTap: () {
-                    ref.read(signupViewModel.notifier).togglePasswordVisible();
-                  },
+                Gap.md,
+                CustomTextField(
+                  hintText: 'Password',
+                  controller: passwordTextController,
+                  textFieldColor: AppColors.kGrey50,
+                  obscureText: !viewState.passwordVisible,
+                  validator: context.validatePassword,
+                  suffixIcon: CustomVisibilityButton(
+                    obscureText: viewState.passwordVisible,
+                    onTap: () {
+                      ref
+                          .read(signupViewModel.notifier)
+                          .togglePasswordVisible();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         onMainActionButtonTapped: () async {
