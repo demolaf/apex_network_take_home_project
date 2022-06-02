@@ -60,6 +60,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.example.apex_network_take_home_project'
 }
 
 flutter {
