@@ -6,8 +6,8 @@ import 'package:logger/logger.dart';
 
 import '../../../core/enums/view_state.dart';
 
-final resetPasswordViewModel = StateNotifierProvider.autoDispose<
-    ResetPasswordViewModel, ResetPasswordViewState>(
+final resetPasswordViewModel =
+    StateNotifierProvider<ResetPasswordViewModel, ResetPasswordViewState>(
   (ref) => ResetPasswordViewModel(ref.read),
 );
 
