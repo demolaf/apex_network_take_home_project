@@ -21,12 +21,13 @@ extension ValidationExtension on BuildContext {
     if (password!.isEmpty) return 'Password is required';
 
     bool isPasswordValid =
-        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{1,}$').hasMatch(password);
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{6,}$').hasMatch(password);
 
     return (isPasswordValid)
         ? null
         : 'The password must contain at least one uppercase and one lowercase '
-            'letter.\nThe password must contain at least one letter.';
+            'letter.\nThe password must contain at least one letter.\n'
+            'The password must be at least 6 characters.';
   }
 
   String? validateNotEmptyField(String? input) {
