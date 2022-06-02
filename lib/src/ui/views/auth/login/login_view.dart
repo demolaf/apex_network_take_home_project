@@ -14,7 +14,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../shared/stateless/gap.dart';
 
 class LoginView extends HookConsumerWidget {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +43,7 @@ class LoginView extends HookConsumerWidget {
             children: <TextSpan>[
               const TextSpan(text: '\n\n'),
               TextSpan(
-                text: 'Welcome back, Sign in to your account',
+                text: 'Welcome back, sign in to your account',
                 style: AppTextStyles.kBodyRegular.copyWith(
                   fontSize: FontSize.s16.sp,
                   color: AppColors.kGrey500,
@@ -51,6 +53,7 @@ class LoginView extends HookConsumerWidget {
           ),
         ),
         form: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -101,7 +104,14 @@ class LoginView extends HookConsumerWidget {
         },
         footerTextLeading: 'Don’t have an account?',
         footerTextTrailing: 'Sign Up',
-        onMainActionButtonTapped: () {},
+        onMainActionButtonTapped: () async {
+          if (!_formKey.currentState!.validate()) {
+            return;
+          }
+          await ref.read(loginViewModel.notifier).login(
+              email: emailTextController.text.trim(),
+              password: passwordTextController.text);
+        },
       ),
     );
   }
