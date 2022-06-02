@@ -8,8 +8,7 @@ import 'package:logger/logger.dart';
 import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 
-final signupViewModel =
-    StateNotifierProvider.autoDispose<SignupViewModel, SignupViewState>(
+final signupViewModel = StateNotifierProvider<SignupViewModel, SignupViewState>(
   (ref) => SignupViewModel(ref.read),
 );
 
@@ -57,7 +56,7 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
       _reader(snackBarProvider).showErrorSnackBar(
-          '${e.errors?['email'] ?? ''}\n${e.errors?['password'] ?? ''}');
+          '${e.message} ${e.errors?['email'] ?? ''}\n${e.errors?['password'] ?? ''}');
     } finally {
       state = state.copyWith(viewState: ViewState.idle);
     }
