@@ -17,24 +17,23 @@ dependencies:
 
   # networking
   dio: ^4.0.6
-  freezed_annotation:
-  json_annotation: ^4.5.0
 
   # storage
   hive: ^2.2.1
 
   # utilities
   flutter_svg: ^1.0.3
+  path_provider: ^2.0.9
   flutter_screenutil: ^5.5.3+2
   flutter_hooks: ^0.18.4
+  introduction_screen: ^3.0.2
   pin_code_fields: ^7.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  json_serializable:
-  freezed:
+  hive_generator: ^1.1.1
   build_runner:
   logger: ^1.1.0
 
