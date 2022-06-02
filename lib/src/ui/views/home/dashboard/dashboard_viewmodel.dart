@@ -8,6 +8,7 @@ import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 import '../../../core/routes.dart';
 
+/// DashboardViewModel Provider
 final dashboardViewModel =
     StateNotifierProvider.autoDispose<DashboardViewModel, DashboardViewState>(
   (ref) => DashboardViewModel(ref.read),
@@ -19,7 +20,13 @@ class DashboardViewModel extends StateNotifier<DashboardViewState> {
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// Initialize view
   void initialize() async {
+    await fetchDashboardSecret();
+  }
+
+  /// Fetch dashboard secret using api
+  Future<void> fetchDashboardSecret() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
       final String? secret =

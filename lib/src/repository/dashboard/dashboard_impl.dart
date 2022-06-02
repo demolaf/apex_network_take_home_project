@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'dashboard.dart';
 
+/// DashboardImpl Repository Provider
 final dashboardRepository = Provider(
   (ref) => DashboardImpl(
     ref.read(apiProvider),
@@ -19,7 +20,7 @@ class DashboardImpl implements Dashboard {
 
   @override
   Future<String?> getDashboardSecret() async {
-    final response = await _api.get(ApiBase.dashboardUri(null));
+    final response = await _api.get(ApiBase.dashboardBase(null));
     return DashboardResponse.fromJson(response).data?.secret;
   }
 }

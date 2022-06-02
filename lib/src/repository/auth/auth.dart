@@ -1,14 +1,14 @@
 abstract class Auth {
-  /// get current user email
+  /// Get current user email
   String? get email;
 
-  /// get current user token
+  /// Get current user token
   String? get token;
 
-  /// set current user email
+  /// Set current user email
   void setEmail({required String email});
 
-  /// set current user token
+  /// Set current user token
   void setToken({required String token});
 
   /// [Future]<[void]> login user.
@@ -61,9 +61,12 @@ abstract class Auth {
   /// parameters: none
   Future<void> logout();
 
+  /// Check if there's a token in the app database
   Future<bool> hasAuthToken();
 
+  /// Check if there's a pin code in the app database
   Future<bool> hasPinCode();
 
+  /// Check user pin code and compare to pin code stored in app database
   Future<bool> verifyPinBeforeLogin({required String currentPinCode});
 }

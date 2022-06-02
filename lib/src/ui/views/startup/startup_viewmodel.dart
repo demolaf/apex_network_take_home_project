@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../core/navigation.dart';
 import '../../core/routes.dart';
 
-/// Start up ViewModel Provider
+/// StartupViewModel Provider
 final startupViewModel = Provider.autoDispose<StartupViewModel>(
   (ref) => StartupViewModel(ref.read),
 );
@@ -15,11 +15,13 @@ class StartupViewModel extends ChangeNotifier {
 
   final Reader _reader;
 
-  /// Any startup initialization can be done here
+  /// Startup initialization
   void initialize() async {
     await checkLoggedIn();
   }
 
+  /// Check if user is logged in and has a pin saved in app database
+  /// then navigating to the appropriate views
   Future<void> checkLoggedIn() async {
     bool isAuthorized = await _reader(authRepository).hasAuthToken();
     bool hasSavedPinCode = await _reader(authRepository).hasPinCode();

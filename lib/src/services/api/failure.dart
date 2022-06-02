@@ -1,3 +1,4 @@
+/// Error handling class for throwing and catching api errors
 class Failure {
   final String message;
   final List<dynamic>? data;

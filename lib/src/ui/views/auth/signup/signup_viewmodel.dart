@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 
+/// SignupViewModel Provider
 final signupViewModel = StateNotifierProvider<SignupViewModel, SignupViewState>(
   (ref) => SignupViewModel(ref.read),
 );
@@ -18,6 +19,7 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// Fetch email token using api
   Future<void> getEmailToken({required String email}) async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
@@ -34,6 +36,7 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
     }
   }
 
+  /// Register user using api
   Future<void> signup(
       {required String fullName,
       required String email,

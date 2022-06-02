@@ -32,6 +32,7 @@ class ApiService implements Api {
 
   late final Dio _http;
 
+  /// Initialize Dio and setup interceptors
   void initialize() {
     _http = Dio()
       ..options.baseUrl = ApiBase.baseUri.toString()
@@ -118,6 +119,7 @@ class ApiService implements Api {
     }
   }
 
+  /// throw Failure exception on api error
   void _throwOnFail(Response response) {
     if (!response.statusCode.toString().contains('20')) {
       final failure = Failure.fromJson(json.decode(response.data));

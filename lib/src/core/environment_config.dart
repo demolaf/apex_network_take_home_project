@@ -1,4 +1,4 @@
-// Environment Config
+/// Environment Config
 class EnvironmentConfig {
   static const String production = 'production';
   static const String development = 'development';

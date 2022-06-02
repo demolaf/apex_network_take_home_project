@@ -13,6 +13,7 @@ import 'package:logger/logger.dart';
 import '../../services/local_storage/local_storage.dart';
 import 'auth.dart';
 
+/// AuthImpl Repository Provider
 final authRepository = Provider<Auth>(
   (ref) => AuthImpl(
     ref.read(apiProvider),

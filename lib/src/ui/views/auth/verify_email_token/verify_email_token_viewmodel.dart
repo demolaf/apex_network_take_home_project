@@ -9,6 +9,7 @@ import 'package:logger/logger.dart';
 
 import '../../../core/enums/view_state.dart';
 
+/// VerifyEmailTokenViewModel Provider
 final verifyEmailTokenViewModel =
     StateNotifierProvider<VerifyEmailViewModel, VerifyEmailTokenViewState>(
   (ref) => VerifyEmailViewModel(ref.read),
@@ -23,10 +24,7 @@ class VerifyEmailViewModel extends StateNotifier<VerifyEmailTokenViewState> {
 
   String? get token => _reader(authRepository).token;
 
-  void goToLoginView() {
-    _reader(navigationProvider).pop();
-  }
-
+  /// Fetch email token using api
   Future<void> resendCode() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
@@ -41,6 +39,7 @@ class VerifyEmailViewModel extends StateNotifier<VerifyEmailTokenViewState> {
     }
   }
 
+  /// Verify email token using api
   Future<void> verifyEmailWithToken({required String token}) async {
     state = state.copyWith(viewState: ViewState.loading);
     try {

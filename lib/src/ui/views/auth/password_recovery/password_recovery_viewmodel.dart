@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 
 import '../../../core/enums/view_state.dart';
 
+/// PasswordRecoveryViewModel Provider
 final passwordRecoveryViewModel =
     StateNotifierProvider<PasswordRecoveryViewModel, PasswordRecoveryViewState>(
   (ref) => PasswordRecoveryViewModel(ref.read),
@@ -21,6 +22,8 @@ class PasswordRecoveryViewModel
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// Fetch email token using api, set email and token to be used by reset
+  /// password view
   Future<void> sendVerificationCode({required String email}) async {
     state = state.copyWith(viewState: ViewState.loading);
     try {

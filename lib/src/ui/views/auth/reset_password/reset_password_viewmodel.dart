@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 
 import '../../../core/enums/view_state.dart';
 
+/// ResetPasswordViewModel Provider
 final resetPasswordViewModel =
     StateNotifierProvider<ResetPasswordViewModel, ResetPasswordViewState>(
   (ref) => ResetPasswordViewModel(ref.read),
@@ -18,10 +19,7 @@ class ResetPasswordViewModel extends StateNotifier<ResetPasswordViewState> {
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
-  void goToLoginView() {
-    _reader(navigationProvider).pop();
-  }
-
+  /// Fetch email token using api
   Future<void> resendCode() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
@@ -33,6 +31,10 @@ class ResetPasswordViewModel extends StateNotifier<ResetPasswordViewState> {
     } finally {
       state = state.copyWith(viewState: ViewState.idle);
     }
+  }
+
+  void goToLoginView() {
+    _reader(navigationProvider).pop();
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/enums/view_state.dart';
 
+/// BaseAuthViewModel Provider
 final baseAuthViewModel =
     StateNotifierProvider.autoDispose<BaseAuthViewModel, BaseAuthViewState>(
   (ref) => BaseAuthViewModel(ref.read),
@@ -14,6 +15,7 @@ class BaseAuthViewModel extends StateNotifier<BaseAuthViewState> {
 
   final Reader _reader;
 
+  /// Login with google using api
   Future<void> loginWithGoogle() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
@@ -28,6 +30,7 @@ class BaseAuthViewModel extends StateNotifier<BaseAuthViewState> {
     }
   }
 
+  /// Login with apple using api
   Future<void> loginWithApple() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {

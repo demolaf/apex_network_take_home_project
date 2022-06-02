@@ -9,6 +9,7 @@ import 'package:logger/logger.dart';
 import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 
+/// LoginWithPinViewModel Provider
 final loginWithPinViewModel =
     StateNotifierProvider<LoginWithPinViewModel, LoginWithPinViewState>(
   (ref) => LoginWithPinViewModel(ref.read),
@@ -21,10 +22,12 @@ class LoginWithPinViewModel extends StateNotifier<LoginWithPinViewState> {
 
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// Initialize View
   void initialize() async {
     await getFullName();
   }
 
+  /// Login user with pin saved in app database
   Future<bool> loginWithPin({required String pinCode}) async {
     state = state.copyWith(viewState: ViewState.loading);
     bool result = false;
@@ -40,6 +43,7 @@ class LoginWithPinViewModel extends StateNotifier<LoginWithPinViewState> {
     return result;
   }
 
+  /// Fetch active user full name from database
   Future<void> getFullName() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
@@ -58,6 +62,7 @@ class LoginWithPinViewModel extends StateNotifier<LoginWithPinViewState> {
         .pushNamedAndRemoveUntil(Routes.dashboardView, (p0) => false);
   }
 
+  /// Logout current user using api
   Future<void> logout() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {

@@ -7,6 +7,7 @@ import '../../../../core/navigation.dart';
 import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 
+/// AccountCreatedSuccessViewModel Provider
 final accountCreatedSuccessViewModel = StateNotifierProvider.autoDispose<
     AccountCreatedSuccessViewModel, AccountCreatedSuccessViewState>(
   (ref) => AccountCreatedSuccessViewModel(ref.read),
@@ -20,11 +21,13 @@ class AccountCreatedSuccessViewModel
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// initialize view
   void initialize() async {
-    await getFullName();
+    await fetchFullName();
   }
 
-  Future<void> getFullName() async {
+  /// Fetch active user full name from database
+  Future<void> fetchFullName() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
       String? name = await _reader(userRepository).getName();

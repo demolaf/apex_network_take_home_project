@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 
 import '../../model/auth/auth_user.dart';
 
+/// UserImpl Repository Provider
 final userRepository = Provider<User>(
   (ref) => UserImpl(
     ref.watch(localStorageProvider.future),
@@ -21,6 +22,8 @@ class UserImpl implements User {
   final Future<LocalStorage>? _localStorage;
 
   bool _isRegisterFlow = false;
+
+  @override
   bool get isRegisterFlow => _isRegisterFlow;
 
   @override

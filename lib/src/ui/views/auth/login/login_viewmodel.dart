@@ -9,6 +9,7 @@ import 'package:logger/logger.dart';
 import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 
+/// LoginViewModel Provider
 final loginViewModel = StateNotifierProvider<LoginViewModel, LoginViewState>(
   (ref) => LoginViewModel(ref.read),
 );
@@ -20,6 +21,7 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
 
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// Login user using api
   Future<void> login({required String email, required String password}) async {
     state = state.copyWith(viewState: ViewState.loading);
     try {

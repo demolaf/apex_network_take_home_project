@@ -119,7 +119,7 @@ class SetPinCodeView extends HookConsumerWidget {
               .setAndSaveUserPinCode(pinCode: pinController.text)
               .then((value) => ref
                   .read(setPinCodeViewModel.notifier)
-                  .checkIfRegisterFlowAndNavigate());
+                  .checkIfRegisterFlowThenNavigate());
         },
       ),
     );

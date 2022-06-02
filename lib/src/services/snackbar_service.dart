@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../ui/core/constants/text_styles.dart';
 
+/// SnackBar Provider
 final snackBarProvider = Provider(
   (ref) => SnackBarService(),
 );
@@ -11,6 +12,7 @@ final snackBarProvider = Provider(
 class SnackBarService {
   final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
+  /// A custom snack bar to show success message
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSuccessSnackBar(
     String text,
   ) {
@@ -26,6 +28,7 @@ class SnackBarService {
     );
   }
 
+  /// A custom snack bar to show error message
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showErrorSnackBar(
     String text,
   ) {

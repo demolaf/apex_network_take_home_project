@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 import '../../../../services/api/failure.dart';
 import '../../../core/enums/view_state.dart';
 
+/// SetPinCodeViewModel Provider
 final setPinCodeViewModel =
     StateNotifierProvider<SetPinCodeViewModel, SetPinCodeViewState>(
   (ref) => SetPinCodeViewModel(ref.read),
@@ -19,6 +20,7 @@ class SetPinCodeViewModel extends StateNotifier<SetPinCodeViewState> {
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
+  /// Save user pin code to database
   Future<void> setAndSaveUserPinCode({required String pinCode}) async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
@@ -33,7 +35,9 @@ class SetPinCodeViewModel extends StateNotifier<SetPinCodeViewState> {
     }
   }
 
-  void checkIfRegisterFlowAndNavigate() {
+  /// Check if user in registration flow to determine what view
+  /// should be navigated to
+  void checkIfRegisterFlowThenNavigate() {
     bool isRegisterFlow = _reader(userRepository).isRegisterFlow;
     if (isRegisterFlow) {
       goToAccountCreatedSuccessView();

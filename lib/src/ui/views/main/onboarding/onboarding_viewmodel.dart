@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../core/navigation.dart';
 import '../../../core/routes.dart';
 
-/// onBoardingViewModel Provider
+/// OnBoardingViewModel Provider
 final onBoardingViewModel = Provider.autoDispose<OnBoardingViewModel>(
   (ref) => OnBoardingViewModel(ref.read),
 );
