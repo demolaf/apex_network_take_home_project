@@ -45,7 +45,7 @@ class OnBoardingView extends ConsumerWidget {
                 )
               ],
             ),
-            const Gap(48),
+            const Gap(18),
             Expanded(
               child: Column(
                 children: [

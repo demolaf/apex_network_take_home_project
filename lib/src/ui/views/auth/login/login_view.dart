@@ -1,6 +1,7 @@
 import 'package:apex_network_take_home_project/src/ui/core/constants/colors.dart';
 import 'package:apex_network_take_home_project/src/ui/core/constants/component_sizes.dart';
 import 'package:apex_network_take_home_project/src/ui/core/constants/text_styles.dart';
+import 'package:apex_network_take_home_project/src/ui/core/extensions/validation_extension.dart';
 import 'package:apex_network_take_home_project/src/ui/core/extensions/view_state.dart';
 import 'package:apex_network_take_home_project/src/ui/shared/stateless/text_field.dart';
 import 'package:apex_network_take_home_project/src/ui/shared/stateless/visibility_toggle.dart';
@@ -31,6 +32,7 @@ class LoginView extends HookConsumerWidget {
         toolbarHeight: 0,
       ),
       extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: true,
         headerText: RichText(
@@ -61,6 +63,7 @@ class LoginView extends HookConsumerWidget {
                 hintText: 'Email',
                 controller: emailTextController,
                 textFieldColor: AppColors.kGrey50,
+                validator: context.validateEmail,
                 keyBoardType: TextInputType.emailAddress,
                 textStyle: AppTextStyles.kBodySemiBold.copyWith(
                   fontSize: FontSize.s16.sp,
@@ -72,6 +75,7 @@ class LoginView extends HookConsumerWidget {
                 controller: passwordTextController,
                 textFieldColor: AppColors.kGrey50,
                 keyBoardType: TextInputType.visiblePassword,
+                validator: context.validateNotEmptyField,
                 obscureText: !viewState.passwordVisible,
                 suffixIcon: CustomVisibilityButton(
                   obscureText: viewState.passwordVisible,

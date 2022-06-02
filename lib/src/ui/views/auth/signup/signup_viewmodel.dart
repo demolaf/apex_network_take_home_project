@@ -67,7 +67,7 @@ class SignupViewModel extends StateNotifier<SignupViewState> {
   }
 
   Future<void> goToVerifyEmailView() async {
-    await _reader(navigationProvider).pushNamed(Routes.verifyEmailView);
+    await _reader(navigationProvider).pushNamed(Routes.verifyEmailTokenView);
   }
 
   void goToLoginView() {

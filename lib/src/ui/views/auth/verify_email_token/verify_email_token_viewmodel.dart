@@ -9,13 +9,14 @@ import 'package:logger/logger.dart';
 
 import '../../../core/enums/view_state.dart';
 
-final verifyEmailViewModel =
-    StateNotifierProvider<VerifyEmailViewModel, VerifyEmailViewState>(
+final verifyEmailTokenViewModel =
+    StateNotifierProvider<VerifyEmailViewModel, VerifyEmailTokenViewState>(
   (ref) => VerifyEmailViewModel(ref.read),
 );
 
-class VerifyEmailViewModel extends StateNotifier<VerifyEmailViewState> {
-  VerifyEmailViewModel(this._reader) : super(VerifyEmailViewState.initial());
+class VerifyEmailViewModel extends StateNotifier<VerifyEmailTokenViewState> {
+  VerifyEmailViewModel(this._reader)
+      : super(VerifyEmailTokenViewState.initial());
 
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
@@ -60,16 +61,16 @@ class VerifyEmailViewModel extends StateNotifier<VerifyEmailViewState> {
   }
 }
 
-class VerifyEmailViewState {
+class VerifyEmailTokenViewState {
   final ViewState viewState;
 
-  const VerifyEmailViewState._({required this.viewState});
+  const VerifyEmailTokenViewState._({required this.viewState});
 
   // initial state of the view
-  factory VerifyEmailViewState.initial() =>
-      const VerifyEmailViewState._(viewState: ViewState.idle);
+  factory VerifyEmailTokenViewState.initial() =>
+      const VerifyEmailTokenViewState._(viewState: ViewState.idle);
 
   // using the default state 'idle' if no new state
-  VerifyEmailViewState copyWith({ViewState? viewState}) =>
-      VerifyEmailViewState._(viewState: viewState ?? this.viewState);
+  VerifyEmailTokenViewState copyWith({ViewState? viewState}) =>
+      VerifyEmailTokenViewState._(viewState: viewState ?? this.viewState);
 }

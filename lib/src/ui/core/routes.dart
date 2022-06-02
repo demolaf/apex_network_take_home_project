@@ -6,12 +6,12 @@ import 'package:apex_network_take_home_project/src/ui/views/auth/password_recove
 import 'package:apex_network_take_home_project/src/ui/views/auth/reset_password/reset_password_view.dart';
 import 'package:apex_network_take_home_project/src/ui/views/auth/set_pin_code/set_pin_code_view.dart';
 import 'package:apex_network_take_home_project/src/ui/views/auth/signup/signup_view.dart';
-import 'package:apex_network_take_home_project/src/ui/views/auth/verify_email/verify_email_view.dart';
 import 'package:apex_network_take_home_project/src/ui/views/main/account_created_success/account_created_success_view.dart';
 import 'package:apex_network_take_home_project/src/ui/views/main/onboarding/onboarding_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../views/auth/verify_email_token/verify_email_token_view.dart';
 import '../views/home/dashboard/dashboard_view.dart';
 import '../views/startup/startup_view.dart';
 
@@ -23,7 +23,7 @@ class Routes {
   static const loginWithPinView = 'login_with_pin_view';
   static const signupView = 'signup_view';
   static const passwordRecoveryView = 'password_recovery_view';
-  static const verifyEmailView = 'verify_email_view';
+  static const verifyEmailTokenView = 'verify_email_token_view';
   static const resetPasswordView = 'reset_password_view';
   static const setPinCodeView = 'set_pin_code_view';
   static const dashboardView = 'dashboard_view';
@@ -52,9 +52,9 @@ class Routes {
           return MaterialPageRoute(
             builder: (_) => SignupView(),
           );
-        case verifyEmailView:
+        case verifyEmailTokenView:
           return MaterialPageRoute(
-            builder: (_) => VerifyEmailView(),
+            builder: (_) => VerifyEmailTokenView(),
           );
         case passwordRecoveryView:
           return MaterialPageRoute(
@@ -107,9 +107,9 @@ class Routes {
           return CupertinoPageRoute(
             builder: (_) => SignupView(),
           );
-        case verifyEmailView:
+        case verifyEmailTokenView:
           return CupertinoPageRoute(
-            builder: (_) => VerifyEmailView(),
+            builder: (_) => VerifyEmailTokenView(),
           );
         case passwordRecoveryView:
           return CupertinoPageRoute(

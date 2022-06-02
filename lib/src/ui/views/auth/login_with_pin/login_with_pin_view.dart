@@ -44,6 +44,7 @@ class _LoginWithPinViewState extends ConsumerState<LoginWithPinView> {
         toolbarHeight: 0,
       ),
       extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: false,
         hasSocialAuth: false,

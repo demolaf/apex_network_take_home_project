@@ -37,7 +37,7 @@ class PasswordRecoveryViewModel
   }
 
   Future<void> goToVerifyEmailTokenView() async {
-    await _reader(navigationProvider).pushNamed(Routes.verifyEmailView);
+    await _reader(navigationProvider).pushNamed(Routes.verifyEmailTokenView);
   }
 
   void goToResetPasswordView() {

@@ -31,6 +31,7 @@ class SetPinCodeView extends HookConsumerWidget {
         toolbarHeight: 0,
       ),
       extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: true,
         hasSocialAuth: false,

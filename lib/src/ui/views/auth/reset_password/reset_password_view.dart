@@ -1,3 +1,4 @@
+import 'package:apex_network_take_home_project/src/ui/core/extensions/validation_extension.dart';
 import 'package:apex_network_take_home_project/src/ui/views/auth/base_auth/base_auth_view.dart';
 import 'package:apex_network_take_home_project/src/ui/views/auth/reset_password/reset_password_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,12 @@ class ResetPasswordView extends HookConsumerWidget {
     final viewState = ref.watch(resetPasswordViewModel);
     return Scaffold(
       backgroundColor: AppColors.kWhite,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.kWhite,
+        toolbarHeight: 0,
+      ),
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: true,
         onMainActionButtonTapped: () {},
@@ -33,6 +40,7 @@ class ResetPasswordView extends HookConsumerWidget {
                   hintText: 'Password',
                   textFieldColor: AppColors.kGrey50,
                   keyBoardType: TextInputType.visiblePassword,
+                  validator: context.validatePassword,
                   obscureText: !viewState.passwordVisible,
                   suffixIcon: CustomVisibilityButton(
                     obscureText: viewState.passwordVisible,
@@ -44,6 +52,7 @@ class ResetPasswordView extends HookConsumerWidget {
                   hintText: 'Confirm password',
                   textFieldColor: AppColors.kGrey50,
                   keyBoardType: TextInputType.visiblePassword,
+                  validator: context.validateNotEmptyField,
                   obscureText: !viewState.confirmPasswordVisible,
                   suffixIcon: CustomVisibilityButton(
                     obscureText: viewState.confirmPasswordVisible,

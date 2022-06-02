@@ -23,6 +23,12 @@ class PasswordRecoveryView extends HookConsumerWidget {
     final emailTextController = useTextEditingController();
     return Scaffold(
       backgroundColor: AppColors.kWhite,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.kWhite,
+        toolbarHeight: 0,
+      ),
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: true,
         onMainActionButtonTapped: () async {

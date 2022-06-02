@@ -1,6 +1,6 @@
 import 'package:apex_network_take_home_project/src/ui/core/extensions/validation_extension.dart';
 import 'package:apex_network_take_home_project/src/ui/core/extensions/view_state.dart';
-import 'package:apex_network_take_home_project/src/ui/views/auth/verify_email/verify_email_viewmodel.dart';
+import 'package:apex_network_take_home_project/src/ui/views/auth/verify_email_token/verify_email_token_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,16 +13,16 @@ import '../../../core/constants/text_styles.dart';
 import '../../../shared/stateless/gap.dart';
 import '../base_auth/base_auth_view.dart';
 
-class VerifyEmailView extends HookConsumerWidget {
-  VerifyEmailView({Key? key}) : super(key: key);
+class VerifyEmailTokenView extends HookConsumerWidget {
+  VerifyEmailTokenView({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewState = ref.watch(verifyEmailViewModel);
+    final viewState = ref.watch(verifyEmailTokenViewModel);
     final otpController = useTextEditingController(
-        text: ref.watch(verifyEmailViewModel.notifier).token);
+        text: ref.watch(verifyEmailTokenViewModel.notifier).token);
     final otpFocusNode = useFocusNode();
     otpFocusNode.requestFocus();
     return Scaffold(
@@ -33,6 +33,7 @@ class VerifyEmailView extends HookConsumerWidget {
         toolbarHeight: 0,
       ),
       extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: true,
         hasSocialAuth: false,
@@ -109,7 +110,7 @@ class VerifyEmailView extends HookConsumerWidget {
                   child: GestureDetector(
                     onTap: () async {
                       await ref
-                          .read(verifyEmailViewModel.notifier)
+                          .read(verifyEmailTokenViewModel.notifier)
                           .resendCode();
                     },
                     child: Text(
@@ -132,10 +133,11 @@ class VerifyEmailView extends HookConsumerWidget {
             return;
           }
           await ref
-              .read(verifyEmailViewModel.notifier)
+              .read(verifyEmailTokenViewModel.notifier)
               .verifyEmailWithToken(token: otpController.text)
-              .then((value) =>
-                  ref.read(verifyEmailViewModel.notifier).goToSignupView());
+              .then((value) => ref
+                  .read(verifyEmailTokenViewModel.notifier)
+                  .goToSignupView());
         },
       ),
     );

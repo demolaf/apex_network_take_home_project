@@ -33,6 +33,7 @@ class SignupView extends HookConsumerWidget {
         toolbarHeight: 0,
       ),
       extendBodyBehindAppBar: true,
+      resizeToAvoidBottomInset: false,
       body: BaseAuthenticationView(
         canGoBack: true,
         headerText: RichText(
