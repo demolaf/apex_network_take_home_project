@@ -45,7 +45,6 @@ class OnBoardingView extends ConsumerWidget {
                 )
               ],
             ),
-            const Gap(18),
             Expanded(
               child: Column(
                 children: [
@@ -67,7 +66,7 @@ class OnBoardingView extends ConsumerWidget {
                             alignment: Alignment.center,
                             children: [
                               Positioned(
-                                bottom: -100.h,
+                                bottom: -120.h,
                                 child: SizedBox(
                                   width: 220.w,
                                   child: Image.asset(
@@ -101,7 +100,7 @@ class OnBoardingView extends ConsumerWidget {
                             alignment: Alignment.center,
                             children: [
                               Positioned(
-                                bottom: -110.h,
+                                bottom: -125.h,
                                 child: SizedBox(
                                   width: 220.w,
                                   child: Image.asset(
