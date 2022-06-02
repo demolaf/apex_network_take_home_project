@@ -1,16 +1,17 @@
-# apex_network_take_home_project
+# Apex Network Take Home Test
 
-A new Flutter project.
+### Features
+- State management technique used > Riverpod
+- Clean Architecture
+- Model-View-ViewModel (MVVM) pattern
+- Network Requests with Dio
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+<p float="left">
+<img src="https://github.com/demolaf/apex_network_take_home_project/blob/master/dashboard.png" width="320" height="720"/>
+<img src="https://github.com/demolaf/apex_network_take_home_project/blob/master/login.png" width="320" height="720"/>
+<img src="https://github.com/demolaf/apex_network_take_home_project/blob/master/loginwithpin.png" width="320" height="720"/>
+<img src="https://github.com/demolaf/apex_network_take_home_project/blob/master/onboarding.png" width="320" height="720"/>
+<img src="https://github.com/demolaf/apex_network_take_home_project/blob/master/setpincode.png" width="320" height="720"/>
+<img src="https://github.com/demolaf/apex_network_take_home_project/blob/master/signup.png" width="320" height="720"/>
+</p>
