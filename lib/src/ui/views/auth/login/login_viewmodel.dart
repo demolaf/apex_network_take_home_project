@@ -40,6 +40,7 @@ class LoginViewModel extends StateNotifier<LoginViewState> {
   }
 
   void goToSetPinCodeView() {
+    _reader(userRepository).setIsRegisterFlow(false);
     _reader(navigationProvider)
         .pushNamedAndRemoveUntil(Routes.setPinCodeView, (p0) => false);
   }
