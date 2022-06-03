@@ -30,7 +30,7 @@ class LocalStorageService implements LocalStorage {
   }
 
   /// Register Hive adapters
-  static void _setupAllHiveTypeAdapters() {
+  void _setupAllHiveTypeAdapters() {
     Hive.registerAdapter(AuthDataAdapter());
     Hive.registerAdapter(AuthUserAdapter());
   }
