@@ -30,7 +30,8 @@ class AuthApiInterceptor implements Interceptor {
       _log.e("No auth user data");
     }
 
-    if (!options.path.contains('/auth')) {
+    if (!options.path.contains('/auth') &&
+        !options.path.contains('/auth/logout')) {
       options.headers['Authorization'] = 'Bearer ${auth?.token}';
     }
     return handler.next(options);
