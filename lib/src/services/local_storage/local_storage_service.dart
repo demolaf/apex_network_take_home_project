@@ -8,23 +8,25 @@ import '../../model/auth/auth_user.dart';
 
 /// LocalStorageProvider Provider
 final localStorageProvider = FutureProvider<LocalStorage>(
-  (ref) => LocalStorageService.getInstance(),
-);
-
-class LocalStorageService implements LocalStorage {
-  static final _log = Logger(filter: DevelopmentFilter());
-
-  static LocalStorageService? _instance;
-
-  /// get instance of local storage and initialize
-  static Future<LocalStorage> getInstance() async {
-    _instance ??= LocalStorageService();
+  (ref) async {
     final appDocumentDir =
         await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
+    return LocalStorageService();
+  },
+);
+
+class LocalStorageService implements LocalStorage {
+  LocalStorageService() {
+    initialize();
+  }
+
+  final _log = Logger(filter: DevelopmentFilter());
+
+  /// Initialize local storage service and set1up hive adapters
+  void initialize() {
     _setupAllHiveTypeAdapters();
     _log.i('Local storage service initialized');
-    return _instance!;
   }
 
   /// Register Hive adapters
