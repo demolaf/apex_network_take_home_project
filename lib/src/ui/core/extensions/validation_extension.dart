@@ -38,6 +38,14 @@ extension ValidationExtension on BuildContext {
     }
   }
 
+  String? validatePinCode(String? input) {
+    if (input!.isEmpty) return 'Pin code is required';
+
+    bool isPinCodeValid = input.length == 5;
+
+    return (isPinCodeValid) ? null : 'Please enter a valid pin code';
+  }
+
   String? validateFullName(String? input) {
     if (input!.isEmpty) {
       return 'Full name is required';

@@ -96,7 +96,7 @@ class _LoginWithPinViewState extends ConsumerState<LoginWithPinView> {
                     textStyle: AppTextStyles.kBodyBold.copyWith(
                       fontSize: FontSize.s24.sp,
                     ),
-                    validator: context.validateOTP,
+                    validator: context.validatePinCode,
                     length: 5,
                     obscureText: true,
                     animationType: AnimationType.fade,

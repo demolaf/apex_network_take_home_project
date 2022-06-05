@@ -1,3 +1,4 @@
+import 'package:apex_network_take_home_project/src/repository/user/user_impl.dart';
 import 'package:apex_network_take_home_project/src/ui/core/extensions/validation_extension.dart';
 import 'package:apex_network_take_home_project/src/ui/core/extensions/view_state.dart';
 import 'package:apex_network_take_home_project/src/ui/views/auth/set_pin_code/set_pin_code_viewmodel.dart';
@@ -70,7 +71,7 @@ class SetPinCodeView extends HookConsumerWidget {
                     textStyle: AppTextStyles.kBodyBold.copyWith(
                       fontSize: FontSize.s24,
                     ),
-                    validator: context.validateOTP,
+                    validator: context.validatePinCode,
                     length: 5,
                     obscureText: true,
                     animationType: AnimationType.fade,
